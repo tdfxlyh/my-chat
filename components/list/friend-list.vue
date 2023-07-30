@@ -1,0 +1,85 @@
+<template>
+	<view class="boxx">
+		<view class="box">
+			<view class="image">
+				<image :src="Icon?Icon:'http://pre.static.xyhsn.com/uploaded/default_icon.jpg'">
+			</view>
+			<view class="right">
+				<view class="right-top">
+					{{UserName?UserName:'好友'}}
+				</view>
+				<view class="right-bottom">
+					{{
+						" "
+					}}
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		name:"friend-list",
+		props:['item'], // id avatar user_name
+		data() {
+			return {
+				
+			}
+		},
+		computed:{
+			UserName(){
+				return this.item.user_name.length>19?this.item.user_name.substring(0,19)+"..." : this.item.user_name
+			},
+			Icon(){
+				return this.item.avatar
+			},
+		}
+	}
+</script>
+
+<style scoped lang="scss">
+.boxx{
+	border-top: 3rpx solid #eee;
+	border-radius: 10rpx;
+	width: 100%;
+	height: 120rpx;
+	background-color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	.box{
+		width: 90%;
+		height: 100rpx;
+		display: flex;
+		align-items: center;
+		.image{
+			flex: 1;
+			width:100rpx;
+			height: 100rpx;
+			border-radius: 50rpx;
+			image{
+				width:100rpx;
+				height: 100rpx;
+				border-radius: 50rpx;
+			}
+		}
+		.right{
+			flex: 4;
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			justify-content: space-between;
+			.right-top{
+				font-size: 29rpx;
+				height: 50rpx;
+			}
+			.right-bottom{
+				font-size: 27rpx;
+				color: $font-grey;
+				height: 50rpx;
+			}
+		}
+	}
+}
+</style>
