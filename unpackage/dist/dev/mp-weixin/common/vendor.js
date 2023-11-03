@@ -1464,7 +1464,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"my-chat","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_NAME":"my-chat","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -8556,7 +8556,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_NAME":"my-chat","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_NAME":"my-chat","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -8577,14 +8577,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"my-chat","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_NAME":"my-chat","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"my-chat","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_NAME":"my-chat","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -8670,7 +8670,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"my-chat","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_NAME":"my-chat","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -19773,7 +19773,8 @@ var install = function install(Vue, vm) {
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _sign_in = _interopRequireDefault(__webpack_require__(/*! ./apis/sign_in.js */ 144));
-var _me = _interopRequireDefault(__webpack_require__(/*! ./apis/me.js */ 145));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _me = _interopRequireDefault(__webpack_require__(/*! ./apis/me.js */ 145));
+var _friend = _interopRequireDefault(__webpack_require__(/*! ./apis/friend.js */ 146));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 // api集中管理
 // 此处第二个参数vm，就是在页面使用的this，可以通过vm获取vuex等操作.
@@ -19783,6 +19784,7 @@ var install = function install(Vue, vm) {
   // 把模块化的加进来
   api.SignIn = _sign_in.default;
   api.Me = _me.default;
+  api.Friend = _friend.default;
   // ...
 
 
@@ -19809,7 +19811,8 @@ var install = function install(Vue, vm) {
   // 如下示例
   // getMethodDemo : params => uni.$u.http.get('/#zh/en/%E4%BD%A0%E5%A5%BD', params),
   // fanyi : (data, body) => uni.$u.http.post('/#zh/en/%E4%BD%A0%E5%A5%BD', data, body),
-  toSignIn: function toSignIn(data, body) {return uni.$u.http.post('/login', data, body);}
+  toSignIn: function toSignIn(data, body) {return uni.$u.http.post('/login', data, body);},
+  toRegister: function toRegister(data, body) {return uni.$u.http.post('/register', data, body);}
   // 忘记密码，确定
   // passwordForgottenSubmit: (data, body) => uni.$u.http.post('/users/password_forgotten/', data, body),
 };exports.default = _default;
@@ -19838,13 +19841,39 @@ var install = function install(Vue, vm) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 146 */,
+/* 146 */
+/*!*****************************************************************************!*\
+  !*** E:/data/Go_Works/src/github.com/tdfxlyh/my-chat/common/apis/friend.js ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  // 如果get想增加body,直接在params里面写即可
+  // get方法，第二个参数为：{参数}，或者{{参数}，{操作}}
+  // post方法，第二个参数为：{参数}，第三个参数为{操作}
+  // 如下示例
+  // getMethodDemo : params => uni.$u.http.get('/#zh/en/%E4%BD%A0%E5%A5%BD', params),
+  // fanyi : (data, body) => uni.$u.http.post('/#zh/en/%E4%BD%A0%E5%A5%BD', data, body),
+  friendList: function friendList(data, body) {return uni.$u.http.post('/friend/friend_list', data, body);},
+
+  getMessage: function getMessage(data, body) {return uni.$u.http.post('/message/get_message', data, body);},
+  addMessage: function addMessage(data, body) {return uni.$u.http.post('/message/add_message', data, body);},
+  optMessage: function optMessage(data, body) {return uni.$u.http.post('/message/opt_message', data, body);}
+  // 忘记密码，确定
+  // passwordForgottenSubmit: (data, body) => uni.$u.http.post('/users/password_forgotten/', data, body),
+};exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
 /* 147 */,
 /* 148 */,
 /* 149 */,
 /* 150 */,
 /* 151 */,
-/* 152 */
+/* 152 */,
+/* 153 */
 /*!*********************************************************************!*\
   !*** E:/data/Go_Works/src/github.com/tdfxlyh/my-chat/utils/trim.js ***!
   \*********************************************************************/
@@ -19862,7 +19891,6 @@ function trim(s) {
 trim;exports.default = _default;
 
 /***/ }),
-/* 153 */,
 /* 154 */,
 /* 155 */,
 /* 156 */,
@@ -19871,22 +19899,15 @@ trim;exports.default = _default;
 /* 159 */,
 /* 160 */,
 /* 161 */,
-/* 162 */,
-/* 163 */,
-/* 164 */,
-/* 165 */,
-/* 166 */,
-/* 167 */,
-/* 168 */,
-/* 169 */
-/*!********************************************************************************!*\
-  !*** E:/data/Go_Works/src/github.com/tdfxlyh/my-chat/utils/isPoneAvailable.js ***!
-  \********************************************************************************/
+/* 162 */
+/*!*********************************************************************************!*\
+  !*** E:/data/Go_Works/src/github.com/tdfxlyh/my-chat/utils/isPhoneAvailable.js ***!
+  \*********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function isPoneAvailable(str) {
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function isPhoneAvailable(str) {
   var myreg = /^[1][2,3,4,5,6,7,8,9][0-9]{9}$/;
   if (!myreg.test(str)) {
     return false;
@@ -19895,10 +19916,18 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   }
 }var _default =
 
-isPoneAvailable;exports.default = _default;
+isPhoneAvailable;exports.default = _default;
 
 /***/ }),
-/* 170 */
+/* 163 */,
+/* 164 */,
+/* 165 */,
+/* 166 */,
+/* 167 */,
+/* 168 */,
+/* 169 */,
+/* 170 */,
+/* 171 */
 /*!********************************************************************************************!*\
   !*** E:/data/Go_Works/src/github.com/tdfxlyh/my-chat/utils/isVerificationCodeAvailable.js ***!
   \********************************************************************************************/
@@ -19918,7 +19947,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 isVerificationCodeAvailable;exports.default = _default;
 
 /***/ }),
-/* 171 */,
 /* 172 */,
 /* 173 */,
 /* 174 */,
@@ -19953,7 +19981,10 @@ isVerificationCodeAvailable;exports.default = _default;
 /* 203 */,
 /* 204 */,
 /* 205 */,
-/* 206 */
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */
 /*!*********************************************************************************************************!*\
   !*** E:/data/Go_Works/src/github.com/tdfxlyh/my-chat/node_modules/uview-ui/components/u-input/props.js ***!
   \*********************************************************************************************************/
@@ -20143,14 +20174,14 @@ isVerificationCodeAvailable;exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 207 */,
-/* 208 */,
-/* 209 */,
 /* 210 */,
 /* 211 */,
 /* 212 */,
 /* 213 */,
-/* 214 */
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */
 /*!**************************************************************************************************!*\
   !*** E:/data/Go_Works/src/github.com/tdfxlyh/my-chat/node_modules/uview-ui/libs/mixin/button.js ***!
   \**************************************************************************************************/
@@ -20171,7 +20202,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     openType: String } };exports.default = _default;
 
 /***/ }),
-/* 215 */
+/* 218 */
 /*!****************************************************************************************************!*\
   !*** E:/data/Go_Works/src/github.com/tdfxlyh/my-chat/node_modules/uview-ui/libs/mixin/openType.js ***!
   \****************************************************************************************************/
@@ -20204,7 +20235,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     } } };exports.default = _default;
 
 /***/ }),
-/* 216 */
+/* 219 */
 /*!**********************************************************************************************************!*\
   !*** E:/data/Go_Works/src/github.com/tdfxlyh/my-chat/node_modules/uview-ui/components/u-button/props.js ***!
   \**********************************************************************************************************/
@@ -20373,14 +20404,14 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 217 */,
-/* 218 */,
-/* 219 */,
 /* 220 */,
 /* 221 */,
 /* 222 */,
 /* 223 */,
-/* 224 */
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */
 /*!**********************************************************************************************************!*\
   !*** E:/data/Go_Works/src/github.com/tdfxlyh/my-chat/node_modules/uview-ui/components/u-search/props.js ***!
   \**********************************************************************************************************/
@@ -20506,9 +20537,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 225 */,
-/* 226 */,
-/* 227 */,
 /* 228 */,
 /* 229 */,
 /* 230 */,
@@ -20520,7 +20548,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* 236 */,
 /* 237 */,
 /* 238 */,
-/* 239 */
+/* 239 */,
+/* 240 */,
+/* 241 */,
+/* 242 */
 /*!********************************************************************************************************!*\
   !*** E:/data/Go_Works/src/github.com/tdfxlyh/my-chat/node_modules/uview-ui/components/u-icon/icons.js ***!
   \********************************************************************************************************/
@@ -20743,7 +20774,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   'uicon-en': "\uE692" };exports.default = _default;
 
 /***/ }),
-/* 240 */
+/* 243 */
 /*!********************************************************************************************************!*\
   !*** E:/data/Go_Works/src/github.com/tdfxlyh/my-chat/node_modules/uview-ui/components/u-icon/props.js ***!
   \********************************************************************************************************/
@@ -20840,14 +20871,14 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 241 */,
-/* 242 */,
-/* 243 */,
 /* 244 */,
 /* 245 */,
 /* 246 */,
 /* 247 */,
-/* 248 */
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */
 /*!****************************************************************************************************************!*\
   !*** E:/data/Go_Works/src/github.com/tdfxlyh/my-chat/node_modules/uview-ui/components/u-loading-icon/props.js ***!
   \****************************************************************************************************************/

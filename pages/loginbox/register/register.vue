@@ -3,20 +3,12 @@
 		<view class="box">
 			<my-nav title='注册'></my-nav>
 			<view class="phone">
-				<u-input v-model="phoneNumber" :color="fontColor" border="bottom" clearable
-				placeholder="手机号" :placeholderStyle="placeholderStyle"></u-input>
+				<u-input v-model="user_name" :color="fontColor" border="bottom" clearable
+				placeholder="昵称" :placeholderStyle="placeholderStyle"></u-input>
 			</view>
-			<view class="verification-code">
-				<view class="left">
-					<u-input v-model="verificationCode" :color="fontColor" border="bottom" clearable
-					placeholder="验证码" :placeholderStyle="placeholderStyle"></u-input>
-				</view>
-				<view class="right" v-if="isEnableSend==true">
-					<u-button type="primary" text="发送验证码"  @tap="sendVerificationCode"></u-button>
-				</view>
-				<view class="right" v-if="isEnableSend==false">
-					<u-button type="warning" :text="sendText" disabled></u-button>
-				</view>
+			<view class="phone">
+				<u-input v-model="phone" :color="fontColor" border="bottom" clearable
+				placeholder="手机号" :placeholderStyle="placeholderStyle"></u-input>
 			</view>
 			<view class="password">
 				<u-input v-model="password" :color="fontColor" border="bottom" clearable password
@@ -28,40 +20,8 @@
 				placeholder="确认密码" :placeholderStyle="placeholderStyle"
 				></u-input>
 			</view>
-			<view class="invitation">
-				<u-input v-model="invitationCode" :color="fontColor" border="bottom" clearable
-				placeholder="邀请码(选填)" :placeholderStyle="placeholderStyle"
-				></u-input>
-			</view>
-			<view class="goodat">
-				
-			</view>
-			<view class="follow">
-				
-			</view>
-			<view class="identity">
-				<radio-group @change="chooseIdentity">
-					<label class="radio-left">
-						<radio value="person" checked/><text>个人</text> 
-					</label>
-					<label>
-						<radio value="unit" /><text>单位</text>
-					</label>
-				</radio-group>
-			</view>
-			
-			
 			<view class="sure">
-				<u-button type="primary" text="注 册"  @tap="toSubmit"></u-button>
-			</view>
-			
-			<view class="agreement">
-				<checkbox :checked="isCheckAgreement" @tap="toCheck"/>
-				我已阅读并同意
-				<view @tap="toSjwlServiceAgreement">
-					《社交网络用户服务协议》
-				</view>
-
+				<u-button type="primary" text="注 册"  @tap="toSubmit()"></u-button>
 			</view>
 		</view>
 	</view>
@@ -69,6 +29,7 @@
 
 <script>
 	import {mapGetters, mapActions} from 'vuex'
+	import isPhoneAvailable from '@/utils/isPhoneAvailable.js'
 	export default {
 		data() {
 			return {
@@ -77,65 +38,63 @@
 				placeholderStyle:"color: #8c9299",
 				suffixIconStyle:"color: #21231e; font-size: 40rpx;",
 				
-				phoneNumber:'',
-				verificationCode:'',
+				user_name:'',
+				phone:'',
 				password:'',
 				passwordAgain:'',
-				invitationCode:'',
-				identity:'person',
-				
-				isCheckAgreement:false,
-				
-				
-				IntervalTimeId:0,
-				
-				
 			}
 		},
-		computed:{
-			...mapGetters(['getTimeRemaining']),
-			isEnableSend(){
-				return this.getTimeRemaining['RegisterCode'] < 1? true:false
-			},
-			sendText(){
-				return this.getTimeRemaining['RegisterCode'] + "秒后重试"
-			}
-		},
- 
 		methods: {
-			...mapActions(["setRegisterCode"]),
-			// 发送验证码
-			sendVerificationCode:function(){
-				this.setRegisterCode(60)
-				var that = this
-				that.IntervalTimeId = setInterval(()=>{
-					that.setRegisterCode(that.getTimeRemaining['RegisterCode']-1)
-					// console.log(that.getTimeRemaining['RegisterCode'])
-					if(that.getTimeRemaining['RegisterCode'] < 1){
-						clearInterval(that.IntervalTimeId)
-					}
-				},1000)
-			},
-			// 是否勾选协议
-			toCheck:function(){
-				this.isCheckAgreement = !this.isCheckAgreement
-			},
-			// 选择身份
-			chooseIdentity:function(e){
-				this.identity = e.detail.value
-				console.log(this.identity)
-			},
 			// 注册
 			toSubmit:function(){
-				console.log(this.identity)
-				console.log(this.isCheckAgreement)
+				if (this.user_name == ""){
+					uni.showToast({title:"请输入昵称",icon:"none"})
+					return
+				}
+				if (this.phone == ""){
+					uni.showToast({title:"请输入手机号",icon:"none"})
+					return
+				}
+				if (!isPhoneAvailable(this.phone)){
+					uni.showToast({title:"手机号不合法",icon:"none"})
+					return
+				}
+				if (this.password == ""){
+					uni.showToast({title:"请输入密码",icon:"none"})
+					return
+				}
+				if (this.passwordAgain == ""){
+					uni.showToast({title:"请输入确认密码",icon:"none"})
+					return
+				}
+				if (this.password != this.passwordAgain){
+					uni.showToast({title:"密码不一致",icon:"none"})
+					return
+				}
+				this.$u.api.SignIn.toRegister({
+					user_name:this.user_name,
+					phone:this.phone,
+					password:this.password,
+				}, {
+					custom: {
+						'auth': false
+					}
+				}).then(res => {
+					console.log(res)
+					if (res.status == 0) {
+						uni.showToast({title:"注册成功",icon:"none"})
+						uni.redirectTo({
+							url: "/pages/loginbox/sign_in/sign_in"
+						})
+					} else{
+						uni.showToast({title:res.custom_msg,icon:"none"})
+					}
+				}).catch(err => {
+					console.log("login in err: ", err)
+					uni.showToast({title:"服务器内部错误",icon:"none"})
+				})
 			},
-			// 服务许可协议
-			toSjwlServiceAgreement:function(){
-				uni.navigateTo({
-					url: '/pages/loginbox/sjwl_service_agreement/sjwl_service_agreement'
-				});
-			},
+
 		}
 	}
 </script>

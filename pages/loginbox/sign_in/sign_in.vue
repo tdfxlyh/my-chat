@@ -104,9 +104,10 @@
 			},
 			// 忘记密码
 			toFindPassword: function() {
-				uni.navigateTo({
-					url: '/pages/loginbox/forget_password/forget_password'
-				});
+				uni.showToast({title:"联系辉哥重置密码",icon:"none"})
+				// uni.navigateTo({
+				// 	url: '/pages/loginbox/forget_password/forget_password'
+				// });
 			},
 		}
 	}

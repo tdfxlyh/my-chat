@@ -31,7 +31,7 @@
             "path" : "pages/tabbar/me/me",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "个人中心",
                 "enablePullDownRefresh": false
             }
             
@@ -40,7 +40,7 @@
             "path" : "pages/tabbar/chat_list/chat_list",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "聊天列表",
                 "enablePullDownRefresh": false
             }
         }
@@ -48,7 +48,7 @@
 		    "path" : "pages/tabbar/friend_list/friend_list",
 		    "style" :                                                                                    
 		    {
-		        "navigationBarTitleText": "",
+		        "navigationBarTitleText": "好友列表",
 		        "enablePullDownRefresh": false
 		    }
 		}
@@ -57,7 +57,7 @@
 		    "style" :                                                                                    
 		    {
 		        "navigationBarTitleText": "",
-		        "enablePullDownRefresh": false
+		        "enablePullDownRefresh": true
 		    }
 		}
     ],
