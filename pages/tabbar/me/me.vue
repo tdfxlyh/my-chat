@@ -3,8 +3,8 @@
 		<!-- 头像部分 -->
 		<view class="v_hand">
 			<view class="box">
-				<view @tap="toSeeUserImages()">
-					<image :src="avatar" mode="aspectFill"></image>
+				<view @tap="toSeeUserImages(avatar)">
+					<image :src="avatar" mode="aspectFill" ></image>
 				</view>
 				<view>
 					<view class="username">{{username}}</view>
@@ -93,20 +93,22 @@
 				})
 			},
 			// 预览头像
-			toSeeUserImages: function() {
-				// uni.showToast({title:"长按修改头像",icon:"none",mask:true}) 
+			toSeeUserImages: function(photo) {
 				var that = this
-				var nowPhoto = that.userpic
+				var nowPhoto = photo
 				var imageList = [nowPhoto]
 				uni.previewImage({
-					current: nowPhoto,
+					current:nowPhoto,
 					urls: imageList,
-					indicator: 'number',
 					longPressActions: {
 						itemList: ['保存图片'],
-						itemColor: '#417fca',
+						itemColor:'#417fca',
 						success: function(data) {
-							that.toDownImages(imageList[data.index])
+							var nowphoto = imageList[data.index]
+							that.toDownImages(nowphoto)
+						},
+						fail: function(err) {
+							console.log(err.errMsg);
 						}
 					}
 				});

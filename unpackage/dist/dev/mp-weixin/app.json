@@ -1,46 +1,45 @@
 {
-    "pages": [
-        "pages/loginbox/sign_in/sign_in",
-        "pages/loginbox/register/register",
-        "pages/loginbox/forget_password/forget_password",
-        "pages/tabbar/me/me",
-        "pages/tabbar/chat_list/chat_list",
-        "pages/tabbar/friend_list/friend_list",
-        "pages/other/chat/chat"
-    ],
-    "subPackages": [],
-    "window": {
-        "navigationBarTextStyle": "black",
-        "navigationBarTitleText": "uni-app",
-        "navigationBarBackgroundColor": "#F8F8F8",
-        "backgroundColor": "#F8F8F8"
-    },
-    "tabBar": {
-        "color": "#7A7E83",
-        "selectedColor": "#55aaff",
-        "borderStyle": "black",
-        "backgroundColor": "#ffffff",
-        "list": [
-            {
-                "pagePath": "pages/tabbar/chat_list/chat_list",
-                "iconPath": "static/tabbar/hotspot.png",
-                "selectedIconPath": "static/tabbar/hotspot_s.png",
-                "text": "聊天"
-            },
-            {
-                "pagePath": "pages/tabbar/friend_list/friend_list",
-                "iconPath": "static/tabbar/personal.png",
-                "selectedIconPath": "static/tabbar/personal_s.png",
-                "text": "朋友"
-            },
-            {
-                "pagePath": "pages/tabbar/me/me",
-                "iconPath": "static/tabbar/me.png",
-                "selectedIconPath": "static/tabbar/me_s.png",
-                "text": "我的"
-            }
-        ]
-    },
-    "usingComponents": {},
-    "sitemapLocation": "sitemap.json"
+  "pages": [
+    "pages/loginbox/sign_in/sign_in",
+    "pages/loginbox/register/register",
+    "pages/loginbox/forget_password/forget_password",
+    "pages/tabbar/me/me",
+    "pages/tabbar/chat_list/chat_list",
+    "pages/tabbar/friend_list/friend_list",
+    "pages/other/chat/chat"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#55aaff",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/tabbar/chat_list/chat_list",
+        "iconPath": "static/tabbar/hotspot.png",
+        "selectedIconPath": "static/tabbar/hotspot_s.png",
+        "text": "聊天"
+      },
+      {
+        "pagePath": "pages/tabbar/friend_list/friend_list",
+        "iconPath": "static/tabbar/personal.png",
+        "selectedIconPath": "static/tabbar/personal_s.png",
+        "text": "朋友"
+      },
+      {
+        "pagePath": "pages/tabbar/me/me",
+        "iconPath": "static/tabbar/me.png",
+        "selectedIconPath": "static/tabbar/me_s.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "usingComponents": {}
 }
