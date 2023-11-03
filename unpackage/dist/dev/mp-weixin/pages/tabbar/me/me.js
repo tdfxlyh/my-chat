@@ -227,20 +227,22 @@ var _vuex = __webpack_require__(/*! vuex */ 137);function ownKeys(object, enumer
 
     },
     // 预览头像
-    toSeeUserImages: function toSeeUserImages() {
-      // uni.showToast({title:"长按修改头像",icon:"none",mask:true}) 
+    toSeeUserImages: function toSeeUserImages(photo) {
       var that = this;
-      var nowPhoto = that.userpic;
+      var nowPhoto = photo;
       var imageList = [nowPhoto];
       uni.previewImage({
         current: nowPhoto,
         urls: imageList,
-        indicator: 'number',
         longPressActions: {
           itemList: ['保存图片'],
           itemColor: '#417fca',
           success: function success(data) {
-            that.toDownImages(imageList[data.index]);
+            var nowphoto = imageList[data.index];
+            that.toDownImages(nowphoto);
+          },
+          fail: function fail(err) {
+            console.log(err.errMsg);
           } } });
 
 
