@@ -20,6 +20,9 @@
 
 		<view class="v_tool">
 			<view class="box">
+				<view class="for" @tap="toAddFriend()">
+					<view>添加好友</view>
+				</view>
 				<view class="for" @tap="Jump()">
 					<view>退出登录</view>
 				</view>
@@ -68,6 +71,12 @@
 		},
 		methods: {
 			...mapActions(['userLogoutAction']),
+			toAddFriend:function(){
+				uni.showToast({
+					title: "待开发，敬请期待",
+					icon: "none"
+				})
+			},
 			Jump: function() {
 				uni.showModal({
 					title: "询问",

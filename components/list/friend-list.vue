@@ -8,11 +8,11 @@
 				<view class="right-top">
 					{{UserName?UserName:'好友'}}
 				</view>
-				<view class="right-bottom">
+			<!-- 	<view class="right-bottom">
 					{{
 						" "
 					}}
-				</view>
+				</view> -->
 			</view>
 		</view>
 	</view>
@@ -29,7 +29,7 @@
 		},
 		computed:{
 			UserName(){
-				return this.item.user_name.length>19?this.item.user_name.substring(0,19)+"..." : this.item.user_name
+				return this.item.name.length>19?this.item.name.substring(0,19)+"..." : this.item.name
 			},
 			Icon(){
 				return this.item.avatar
@@ -74,11 +74,11 @@
 				font-size: 29rpx;
 				height: 50rpx;
 			}
-			.right-bottom{
-				font-size: 27rpx;
-				color: $font-grey;
-				height: 50rpx;
-			}
+			// .right-bottom{
+			// 	font-size: 27rpx;
+			// 	color: $font-grey;
+			// 	height: 50rpx;
+			// }
 		}
 	}
 }

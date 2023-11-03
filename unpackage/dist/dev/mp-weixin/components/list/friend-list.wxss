@@ -66,9 +66,4 @@
   font-size: 29rpx;
   height: 50rpx;
 }
-.boxx .box .right .right-bottom.data-v-f90c6492 {
-  font-size: 27rpx;
-  color: #777777;
-  height: 50rpx;
-}
 

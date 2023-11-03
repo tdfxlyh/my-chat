@@ -38,7 +38,7 @@
 <script>
 	import {mapGetters, mapActions} from 'vuex'
 	import trim from '@/utils/trim.js'
-	import isPoneAvailable from '@/utils/isPoneAvailable.js'
+	import isPhoneAvailable from '@/utils/isPhoneAvailable.js'
 	import isVerificationCodeAvailable from '@/utils/isVerificationCodeAvailable.js'
 	export default {
 		data() {
@@ -73,7 +73,7 @@
 			sendVerificationCode:function(){
 				
 				var phone_number = trim(this.phoneNumber)
-				if(!isPoneAvailable(phone_number)){
+				if(!isPhoneAvailable(phone_number)){
 					uni.showToast({title:"手机号格式错误",icon:"none"})
 				}else{
 					// 发送验证码
@@ -104,7 +104,7 @@
 				// 进行参数检验
 				if(phone_number == ''){
 					uni.showToast({title:"手机号不能为空",icon:"none"})
-				}else if(!isPoneAvailable(phone_number)){
+				}else if(!isPhoneAvailable(phone_number)){
 					uni.showToast({title:"手机号格式错误",icon:"none"})
 				}else if(password == ""){
 					uni.showToast({title:"密码不能为空",icon:"none"})

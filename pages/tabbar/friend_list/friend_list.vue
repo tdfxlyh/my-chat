@@ -12,7 +12,7 @@
 		<view class="box">
 			<scroll-view scroll-y="true" class="scroll-Y">
 				<view class="content">
-					<view v-for="(item,index) in testPersonalListComp" :key="index">
+					<view v-for="(item,index) in friendListDataComp" :key="index">
 						<FriendList :item='item' @tap='toChat(item.id)'></FriendList>
 					</view>
 				</view>
@@ -28,25 +28,11 @@
 			return {
 				current: 0,
 				searchVal: "",
-				testPersonalList: [{
-						user_name: "常仔",
-						avatar: "https://img2.baidu.com/it/u=2179862893,3843283184&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"
-					},
-					{
-						user_name: "常仔",
-						avatar: "https://img2.baidu.com/it/u=2179862893,3843283184&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"
-					},
-					{
-						user_name: "飞哥",
-						avatar: "https://img2.baidu.com/it/u=2179862893,3843283184&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"
-					},
-					{
-						user_name: "腾飞",
-						avatar: "https://img2.baidu.com/it/u=2179862893,3843283184&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"
-					},
-					{
-						user_name: "辉辉",
-						avatar: "https://img2.baidu.com/it/u=2179862893,3843283184&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"
+				friendListData: [{
+						id: 3,
+						name: "wxy",
+						avatar: "https://img2.baidu.com/it/u=2179862893,3843283184&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
+						pinyin:"w"
 					},
 				],
 			}
@@ -55,16 +41,36 @@
 			FriendList
 		},
 		onShow() {
-			// 。。。
+			// 获取用户信息
+			this.$u.api.Friend.friendList({}, {
+				custom: {
+					'auth': true
+				}
+			}).then(res => {
+				console.log(res)
+				if (res.status == 0) {
+					this.friendListData = res.data.msg_list
+				} else {
+					uni.showToast({
+						title: "服务器内部错误",
+						icon: "none"
+					})
+				}
+			}).catch(err => {
+				uni.showToast({
+					title: "服务器内部错误",
+					icon: "none"
+				})
+			})
 		},
 		computed: {
-			testPersonalListComp() {
+			friendListDataComp() {
 				if (this.current == 0) {
 					var searchVal = this.searchVal
 					if (searchVal == '') {
-						return this.testPersonalList
+						return this.friendListData
 					} else {
-						return this.testPersonalList.filter((temp) => {
+						return this.friendListData.filter((temp) => {
 							var tempData = temp.name + temp.username
 							return tempData.indexOf(searchVal) !== -1
 						})
@@ -74,7 +80,10 @@
 		},
 		methods: {
 			toChat: function(id) {
-				// 跳转到
+				uni.navigateTo({
+						url:  "/pages/other/chat/chat?other_user_id="+id
+					}
+				)
 			}
 		}
 	}
