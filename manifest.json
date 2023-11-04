@@ -2,8 +2,8 @@
     "name" : "my-chat",
     "appid" : "__UNI__3644DD7",
     "description" : "",
-    "versionName" : "1.0.0",
-    "versionCode" : "100",
+    "versionName" : "1.0.2",
+    "versionCode" : 102,
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {
@@ -41,9 +41,34 @@
                 ]
             },
             /* ios打包配置 */
-            "ios" : {},
+            "ios" : {
+                "dSYMs" : false
+            },
             /* SDK配置 */
-            "sdkConfigs" : {}
+            "sdkConfigs" : {
+                "ad" : {}
+            },
+            "icons" : {
+                "android" : {
+                    "hdpi" : "C:/Users/lyh/Desktop/pic/my-chat/72x72.png",
+                    "xhdpi" : "C:/Users/lyh/Desktop/pic/my-chat/96x96.png",
+                    "xxhdpi" : "C:/Users/lyh/Desktop/pic/my-chat/144x144.png",
+                    "xxxhdpi" : "C:/Users/lyh/Desktop/pic/my-chat/192x192.png"
+                },
+                "ios" : {
+                    "appstore" : "C:/Users/lyh/Desktop/pic/my-chat/1024x1024.png",
+                    "iphone" : {
+                        "app@2x" : "C:/Users/lyh/Desktop/pic/my-chat/96x96.png",
+                        "app@3x" : "C:/Users/lyh/Desktop/pic/my-chat/192x192.png",
+                        "spotlight@2x" : "C:/Users/lyh/Desktop/pic/my-chat/96x96.png",
+                        "spotlight@3x" : "C:/Users/lyh/Desktop/pic/my-chat/144x144.png",
+                        "settings@2x" : "C:/Users/lyh/Desktop/pic/my-chat/72x72.png",
+                        "settings@3x" : "C:/Users/lyh/Desktop/pic/my-chat/96x96.png",
+                        "notification@2x" : "C:/Users/lyh/Desktop/pic/my-chat/72x72.png",
+                        "notification@3x" : "C:/Users/lyh/Desktop/pic/my-chat/96x96.png"
+                    }
+                }
+            }
         }
     },
     /* 快应用特有相关 */

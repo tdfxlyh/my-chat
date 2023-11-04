@@ -8,11 +8,11 @@
 				<view class="right-top">
 					{{UserName?UserName:'好友'}}
 				</view>
-			<!-- 	<view class="right-bottom">
-					{{
-						" "
-					}}
-				</view> -->
+			</view>
+			<view v-if="item.count>0" class="point">
+				<view class="point_right">
+					{{item.count_str}}
+				</view>
 			</view>
 		</view>
 	</view>
@@ -24,7 +24,6 @@
 		props:['item'], // id avatar user_name
 		data() {
 			return {
-				
 			}
 		},
 		computed:{
@@ -33,7 +32,7 @@
 			},
 			Icon(){
 				return this.item.avatar
-			},
+			}
 		}
 	}
 </script>
@@ -44,17 +43,19 @@
 	border-radius: 10rpx;
 	width: 100%;
 	height: 120rpx;
-	background-color: white;
+	// background-color: white;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	// background-color: pink;
 	.box{
 		width: 90%;
 		height: 100rpx;
 		display: flex;
 		align-items: center;
+		// background-color: #00ffff;
 		.image{
-			flex: 1;
+			flex: 2;
 			width:100rpx;
 			height: 100rpx;
 			border-radius: 50rpx;
@@ -65,7 +66,7 @@
 			}
 		}
 		.right{
-			flex: 4;
+			flex: 8;
 			display: flex;
 			flex-direction: column;
 			align-items: flex-start;
@@ -74,11 +75,25 @@
 				font-size: 29rpx;
 				height: 50rpx;
 			}
-			// .right-bottom{
-			// 	font-size: 27rpx;
-			// 	color: $font-grey;
-			// 	height: 50rpx;
-			// }
+		}
+		.point{
+			flex: 1;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			.point_right{
+				border-radius: 50rpx;
+				background-color: red;
+				color: white;
+				font-weight: 550;
+				width: 50rpx;
+				height: 50rpx;
+				font-size: 27rpx;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
 		}
 	}
 }

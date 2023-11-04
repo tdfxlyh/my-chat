@@ -3,8 +3,8 @@
 const install = (Vue, vm) => {
 	uni.$u.http.setConfig((config) => {
 		// 全局的baseURL
-		config.baseURL = 'http://127.0.0.1:8080';
-		config.staticURL = 'http://127.0.0.1:8080';
+		config.baseURL = 'http://121.40.249.44:8080';
+		config.staticURL = 'http://121.40.249.44:8080';
 		config.defaultHeadURL = 'https://bpic.51yuansu.com/pic3/cover/04/00/52/5f744b5a97c9c_610.jpg';
 		
 		// 配置全局请求头信息
