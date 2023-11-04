@@ -9,7 +9,7 @@
 					{{UserName?UserName:'好友'}}
 				</view>
 			</view>
-			<view v-if="item.count>0" class="point">
+			<view v-if="item.count>0 && isChatList" class="point">
 				<view class="point_right">
 					{{item.count_str}}
 				</view>
@@ -21,7 +21,7 @@
 <script>
 	export default {
 		name:"friend-list",
-		props:['item'], // id avatar user_name
+		props:['item','isChatList'], // id avatar user_name
 		data() {
 			return {
 			}
@@ -86,9 +86,9 @@
 				background-color: red;
 				color: white;
 				font-weight: 550;
-				width: 50rpx;
-				height: 50rpx;
-				font-size: 27rpx;
+				width: 32rpx;
+				height: 32rpx;
+				font-size: 15rpx;
 				display: flex;
 				align-items: center;
 				justify-content: center;
