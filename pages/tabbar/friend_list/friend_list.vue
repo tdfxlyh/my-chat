@@ -13,7 +13,7 @@
 			<scroll-view scroll-y="true" class="scroll-Y">
 				<view class="content">
 					<view v-for="(item,index) in friendListDataComp" :key="index" @tap='toChat(item.id)'>
-						<FriendList :item='item' ></FriendList>
+						<FriendList :item='item' :isChatList="false" ></FriendList>
 					</view>
 				</view>
 			</scroll-view>
@@ -49,7 +49,7 @@
 				console.log(122)
 				// 获取用户信息
 				that.getFriendList()
-			},2000)
+			},5000)
 		},
 		onHide(){
 			console.log(111)
