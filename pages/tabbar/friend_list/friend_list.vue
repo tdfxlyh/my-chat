@@ -12,8 +12,8 @@
 		<view class="box">
 			<scroll-view scroll-y="true" class="scroll-Y">
 				<view class="content">
-					<view v-for="(item,index) in friendListDataComp" :key="index">
-						<FriendList :item='item' @tap='toChat(item.id)'></FriendList>
+					<view v-for="(item,index) in friendListDataComp" :key="index" @tap='toChat(item.id)'>
+						<FriendList :item='item' ></FriendList>
 					</view>
 				</view>
 			</scroll-view>
@@ -35,33 +35,25 @@
 						pinyin:"w"
 					},
 				],
+				// 定时器
+				timeOut1:0,
 			}
 		},
 		components: {
 			FriendList
 		},
 		onShow() {
-			// 获取用户信息
-			this.$u.api.Friend.friendList({}, {
-				custom: {
-					'auth': true
-				}
-			}).then(res => {
-				console.log(res)
-				if (res.status == 0) {
-					this.friendListData = res.data.msg_list
-				} else {
-					uni.showToast({
-						title: "服务器内部错误",
-						icon: "none"
-					})
-				}
-			}).catch(err => {
-				uni.showToast({
-					title: "服务器内部错误",
-					icon: "none"
-				})
-			})
+			var that = this
+			that.getFriendList()
+			that.timeOut1 = setInterval(()=>{
+				console.log(122)
+				// 获取用户信息
+				that.getFriendList()
+			},2000)
+		},
+		onHide(){
+			console.log(111)
+			clearInterval(this.timeOut1)
 		},
 		computed: {
 			friendListDataComp() {
@@ -84,7 +76,30 @@
 						url:  "/pages/other/chat/chat?other_user_id="+id
 					}
 				)
-			}
+			},
+			getFriendList:function(){
+				// 获取用户信息
+				this.$u.api.Friend.friendList({}, {
+					custom: {
+						'auth': true
+					}
+				}).then(res => {
+					console.log(res)
+					if (res.status == 0) {
+						this.friendListData = res.data.msg_list
+					} else {
+						uni.showToast({
+							title: "服务器内部错误",
+							icon: "none"
+						})
+					}
+				}).catch(err => {
+					uni.showToast({
+						title: "服务器内部错误",
+						icon: "none"
+					})
+				})
+			},
 		}
 	}
 </script>
@@ -92,9 +107,8 @@
 
 <style scoped lang="scss">
 	.boxx {
-		background-color: #eeeeee;
-		height: 100vh;
-
+		// background-color: #eeeeee;
+		// height: 100vh;
 		.search-box {
 			width: 100%;
 			height: 100rpx;
@@ -115,14 +129,14 @@
 
 		.box {
 			width: 100%;
+			height: 100%;
 			display: flex;
 			justify-content: center;
 			align-items: center;
-
 			.scroll-Y {
 				width: 100%;
 				height: 100%;
-				background-color: #eeeeee;
+				// background-color: #eeeeee;
 
 				.content {
 					width: 100%;

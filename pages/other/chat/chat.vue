@@ -5,6 +5,9 @@
 				<scroll-view class="scroll"  scroll-y="true" scroll-with-animation="true" :scroll-top='scrollTop' @scroll="lookChat"  
 					refresher-enabled="true" :refresher-threshold="10" :refresher-triggered="false" @refresherrefresh="onRefresh">
 					<block v-for="(item, index) in message_list" :key="index">
+						<view class="time" v-if="item.time_str!=''">
+							{{item.time_str}}
+						</view>
 						<!-- 其他人 -->
 						<view class="chat-one" v-if="!item.is_me">
 							<image class="chat-face"  :src="item.avatar_url" @tap="toSeeUserImages(item.avatar_url)" mode="aspectFill"/>
@@ -125,12 +128,14 @@
 						}
 					})
 				}
-			},2000)
+			},1500)
 		},
 		onHide(){
+			console.log(11)
 			clearInterval(this.timeOut1)
 		},
 		onUnload(){
+			console.log(22)
 			clearInterval(this.timeOut1)
 		},
 		methods: {
@@ -374,6 +379,14 @@
 		bottom: 100rpx;
 		padding-bottom: 30rpx;
 		border-bottom: 1rpx solid #dddddd;
+		.time{
+			width: 100%;
+			height: 50rpx;
+			font-size: 27rpx;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
 		.chat-one {
 			display: flex;
 			flex-direction: row; 
