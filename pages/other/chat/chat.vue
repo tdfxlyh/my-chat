@@ -28,7 +28,7 @@
 				</scroll-view>
 				
 				<view class="chat-footer">
-					<input class="msg-input" type="text" cursor-spacing="16" v-model="myInput" @input="longCheck()" placeholder="请输入(140字以内)"/>
+					<textarea class="msg-input" type="text" cursor-spacing="16" v-model="myInput" placeholder="请输入"/>
 					<view class="send-btn" @tap="toSendMsg()">发送</view>
 				</view>
 			
@@ -44,7 +44,7 @@
 			return {
 				// 自动滚动吗，0不滚动，1滚动
 				isGunDong:1,
-				scrollTop:999999,
+				scrollTop:999999999,
 				
 				myInput:"",
 				
@@ -81,6 +81,7 @@
 				if (res.status == 0) {
 					this.receiver_user_name = res.data.user_name
 					this.message_list = res.data.msg_list
+					this.goBottom()
 					uni.setNavigationBarTitle({
 						title: res.data.user_name
 					});
@@ -91,10 +92,9 @@
 					})
 				}
 			})
-		
+			
 		},
 		onShow() {
-			this.goBottom()
 			var that = this
 			that.timeOut1 = setInterval(()=>{
 				console.log(1)
@@ -117,9 +117,8 @@
 					}).then(res => {
 						console.log(res)
 						if (res.status == 0) {
-							res.data.msg_list.forEach(tmp=>{
-								that.message_list.push(tmp)
-							})
+							that.message_list = that.message_list.concat(res.data.msg_list)
+							that.goBottom()
 						} else {
 							uni.showToast({
 								title: "服务器内部错误",
@@ -128,7 +127,7 @@
 						}
 					})
 				}
-			},1500)
+			},800)
 		},
 		onHide(){
 			console.log(11)
@@ -143,7 +142,7 @@
 			lookChat:function(e){
 				var top = e.target.scrollTop
 				var height = e.target.scrollHeight
-				if(height-top>770){
+				if(height-top>1000){
 					this.isGunDong=0
 				}else{
 					this.isGunDong=1
@@ -151,7 +150,7 @@
 			},
 			goBottom: function(e) {
 				if(this.isGunDong==1){
-					this.scrollTop = 999999999+Math.ceil(Math.random()*1000); 
+					this.scrollTop = 999999999+Math.ceil(Math.random()*800); 
 				}
 			},
 			// 查看头像
@@ -167,21 +166,12 @@
 						itemColor:'#417fca',
 						success: function(data) {
 							var nowphoto = imageList[data.index]
-							that.toDownImages(nowphoto)
 						},
 						fail: function(err) {
 							console.log(err.errMsg);
 						}
 					}
 				});
-			},
-			// 输入文字长度检查
-			longCheck:function(){
-				if(this.myInput.length==140){
-					uni.showToast({title:"已达到最大长度！",icon:'none',mask:false})
-				}else if(this.myInput.length>=138){
-					uni.showToast({title:"注意不要超过140字！",icon:'none',mask:false})
-				}
 			},
 			onRefresh:function(){
 				var that = this
