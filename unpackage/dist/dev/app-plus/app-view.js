@@ -3974,6 +3974,9 @@ var render = function () {
                       key: item,
                       attrs: { _i: "7-" + $30 },
                       on: {
+                        longpress: function ($event) {
+                          return _vm.$handleViewEvent($event)
+                        },
                         click: function ($event) {
                           return _vm.$handleViewEvent($event)
                         },

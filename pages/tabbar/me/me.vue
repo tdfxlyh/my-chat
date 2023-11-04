@@ -72,10 +72,50 @@
 		methods: {
 			...mapActions(['userLogoutAction']),
 			toAddFriend:function(){
-				uni.showToast({
-					title: "待开发，敬请期待",
-					icon: "none"
-				})
+				uni.showModal({
+					title: '输入ta的手机号',
+					content: '',
+					editable:true,//是否显示输入框
+					placeholderText:'1xxx',//输入框提示内容
+					confirmText: '确认',
+					cancelText: '取消',
+					success: (res) => {
+					  if (res.confirm) {
+						if (res.content == ""){
+							uni.showToast({
+								title: "手机号不能为空",
+								icon: "none"
+							})
+							return 
+						}
+						this.$u.api.Friend.addFriend({
+							phone:res.content,
+						}, {
+							custom: {
+								'auth': true
+							}
+						}).then(res => {
+							console.log(res)
+							if (res.status == 0) {
+								uni.showToast({
+									title: "添加成功",
+									icon: "none"
+								})
+							} else {
+								uni.showToast({
+									title: res.custom_msg,
+									icon: "none"
+								})
+							}
+						}).catch(err => {
+							uni.showToast({
+								title: "服务器内部错误",
+								icon: "none"
+							})
+						})
+					  }
+					} 
+				 });
 			},
 			Jump: function() {
 				uni.showModal({

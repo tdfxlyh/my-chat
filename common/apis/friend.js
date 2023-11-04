@@ -6,10 +6,14 @@ export default {
 	// getMethodDemo : params => uni.$u.http.get('/#zh/en/%E4%BD%A0%E5%A5%BD', params),
 	// fanyi : (data, body) => uni.$u.http.post('/#zh/en/%E4%BD%A0%E5%A5%BD', data, body),
 	friendList: (data, body)  => uni.$u.http.post('/friend/friend_list', data, body),
+	updateNotes:(data, body)  => uni.$u.http.post('/friend/update_notes', data, body),
+	addFriend:  (data, body)  => uni.$u.http.post('/friend/add_friend', data, body),
 	
 	getMessage: (data, body)  => uni.$u.http.post('/message/get_message', data, body),
 	addMessage: (data, body)  => uni.$u.http.post('/message/add_message', data, body),
 	optMessage: (data, body)  => uni.$u.http.post('/message/opt_message', data, body),
+	
+	
 	// 忘记密码，确定
 	// passwordForgottenSubmit: (data, body) => uni.$u.http.post('/users/password_forgotten/', data, body),
 }

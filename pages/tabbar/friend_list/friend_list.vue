@@ -12,7 +12,7 @@
 		<view class="box">
 			<scroll-view scroll-y="true" class="scroll-Y">
 				<view class="content">
-					<view v-for="(item,index) in friendListDataComp" :key="index" @tap='toChat(item.id)'>
+					<view v-for="(item,index) in friendListDataComp" :key="index" @tap='toChat(item.id)' @longpress="UpdateNotes(item.id)">
 						<FriendList :item='item' :isChatList="false" ></FriendList>
 					</view>
 				</view>
@@ -47,9 +47,8 @@
 			that.getFriendList()
 			that.timeOut1 = setInterval(()=>{
 				console.log(122)
-				// 获取用户信息
 				that.getFriendList()
-			},5000)
+			},3000)
 		},
 		onHide(){
 			console.log(111)
@@ -77,8 +76,54 @@
 					}
 				)
 			},
+			UpdateNotes:function(id){
+				 uni.showModal({
+					title: '请填写对ta的备注',
+					content: '',
+					editable:true,//是否显示输入框
+					placeholderText:'',//输入框提示内容
+					confirmText: '确认',
+					cancelText: '取消',
+					success: (res) => {
+					  if (res.confirm) {
+						if (res.content == ""){
+							uni.showToast({
+								title: "不能为空",
+								icon: "none"
+							})
+							return 
+						}
+						this.$u.api.Friend.updateNotes({
+							user_id:id,
+							notes:res.content,
+						}, {
+							custom: {
+								'auth': true
+							}
+						}).then(res => {
+							console.log(res)
+							if (res.status == 0) {
+								uni.showToast({
+									title: "修改成功",
+									icon: "none"
+								})
+							} else {
+								uni.showToast({
+									title: res.custom_msg,
+									icon: "none"
+								})
+							}
+						}).catch(err => {
+							uni.showToast({
+								title: "服务器内部错误",
+								icon: "none"
+							})
+						})
+					  }
+					} 
+				  });
+			},
 			getFriendList:function(){
-				// 获取用户信息
 				this.$u.api.Friend.friendList({}, {
 					custom: {
 						'auth': true
