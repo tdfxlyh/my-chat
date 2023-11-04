@@ -28,7 +28,7 @@
 				</scroll-view>
 				
 				<view class="chat-footer">
-					<textarea class="msg-input" type="text" cursor-spacing="16" v-model="myInput" placeholder="请输入"/>
+					<textarea class="msg-input" type="text" cursor-spacing="16" :maxlength="-1" v-model="myInput" placeholder="请输入"/>
 					<view class="send-btn" @tap="toSendMsg()">发送</view>
 				</view>
 			
@@ -264,7 +264,7 @@
 							opt_type = 3
 						}
 						uni.showModal({
-							content: "是否确定" + opt_type==2?"删除":"撤回",
+							content: "是否确定" + (opt_type==2?"删除":"撤回"),
 							confirmColor:"#ff0000",
 							success:res=>{
 								if(res.confirm==true){

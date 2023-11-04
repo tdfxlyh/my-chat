@@ -4207,6 +4207,7 @@ var render = function () {
                 attrs: {
                   type: "text",
                   "cursor-spacing": "16",
+                  maxlength: _vm._$g(17, "a-maxlength"),
                   placeholder: "请输入",
                   _i: 17,
                 },
