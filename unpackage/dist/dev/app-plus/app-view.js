@@ -4202,22 +4202,19 @@ var render = function () {
             "uni-view",
             { staticClass: _vm._$g(16, "sc"), attrs: { _i: 16 } },
             [
-              _c("v-uni-input", {
+              _c("v-uni-textarea", {
                 staticClass: _vm._$g(17, "sc"),
                 attrs: {
                   type: "text",
                   "cursor-spacing": "16",
-                  placeholder: "请输入(140字以内)",
+                  placeholder: "请输入",
                   _i: 17,
-                },
-                on: {
-                  input: function ($event) {
-                    return _vm.$handleViewEvent($event)
-                  },
                 },
                 model: {
                   value: _vm._$g(17, "v-model"),
-                  callback: function () {},
+                  callback: function ($$v) {
+                    _vm.$handleVModelEvent(17, $$v)
+                  },
                   expression: "myInput",
                 },
               }),
