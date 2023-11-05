@@ -6,6 +6,8 @@ export default {
 	// getMethodDemo : params => uni.$u.http.get('/#zh/en/%E4%BD%A0%E5%A5%BD', params),
 	// fanyi : (data, body) => uni.$u.http.post('/#zh/en/%E4%BD%A0%E5%A5%BD', data, body),
 	userInfo:  (data, body)  => uni.$u.http.post('/info/user_info', data, body),
+	
+	optUser:  (data, body)  => uni.$u.http.post('/info/opt_user', data, body),
 	// 忘记密码，确定
 	// passwordForgottenSubmit: (data, body) => uni.$u.http.post('/users/password_forgotten/', data, body),
 }

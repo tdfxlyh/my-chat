@@ -12,6 +12,9 @@ export default {
 	getMessage: (data, body)  => uni.$u.http.post('/message/get_message', data, body),
 	addMessage: (data, body)  => uni.$u.http.post('/message/add_message', data, body),
 	optMessage: (data, body)  => uni.$u.http.post('/message/opt_message', data, body),
+	messageList: (data, body)  => uni.$u.http.post('/message/message_info_list', data, body),
+	
+	
 	
 	
 	// 忘记密码，确定

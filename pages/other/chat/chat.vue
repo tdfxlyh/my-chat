@@ -117,7 +117,16 @@
 					}).then(res => {
 						console.log(res)
 						if (res.status == 0) {
-							that.message_list = that.message_list.concat(res.data.msg_list)
+							var id = 0
+							if (that.message_list.length>0){
+								id = that.message_list[that.message_list.length-1].id
+							}
+							res.data.msg_list.forEach(temp=>{
+								if (temp.id > id){
+									id = temp.id 
+									that.message_list.push(temp)
+								}
+							})
 							that.goBottom()
 						} else {
 							uni.showToast({
@@ -198,8 +207,12 @@
 					console.log(res)
 					if (res.status == 0) {
 						res.data.msg_list.reverse()
+						var res_timestamp = timestamp
 						res.data.msg_list.forEach(tmp=>{
-							that.message_list.unshift(tmp)
+							if (tmp.timestamp < res_timestamp){
+								res_timestamp =  tmp.timestamp
+								that.message_list.unshift(tmp)
+							}
 						})
 						setTimeout(()=>{
 							that.triggeredPull = false
