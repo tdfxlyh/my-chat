@@ -117,7 +117,16 @@
 					}).then(res => {
 						console.log(res)
 						if (res.status == 0) {
-							that.message_list = that.message_list.concat(res.data.msg_list)
+							var id = 0
+							if (that.message_list.length>0){
+								id = that.message_list[that.message_list.length-1].id
+							}
+							res.data.msg_list.forEach(temp=>{
+								if (temp.id > id){
+									id = temp.id 
+									that.message_list.push(temp)
+								}
+							})
 							that.goBottom()
 						} else {
 							uni.showToast({

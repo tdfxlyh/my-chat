@@ -13,7 +13,7 @@
 			<scroll-view scroll-y="true" class="scroll-Y">
 				<view class="content">
 					<view v-for="(item,index) in friendListDataComp" :key="index" @tap='toChat(item.id)'>
-						<FriendList :item='item' :isChatList="true" ></FriendList>
+						<MessageList :item='item'></MessageList>
 					</view>
 				</view>
 			</scroll-view>
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-	import FriendList from "@/components/list/friend-list.vue"
+	import MessageList from "@/components/list/message-list.vue"
 	import compare from '@/utils/compare.js'
 	export default {
 		data() {
@@ -41,7 +41,7 @@
 			}
 		},
 		components: {
-			FriendList
+			MessageList
 		},
 		onShow() {
 			var that = this
@@ -80,7 +80,7 @@
 			},
 			getFriendList:function(){
 				// 获取用户信息
-				this.$u.api.Friend.friendList({}, {
+				this.$u.api.Friend.messageList({}, {
 					custom: {
 						'auth': true
 					}

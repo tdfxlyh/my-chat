@@ -20,6 +20,15 @@
 
 		<view class="v_tool">
 			<view class="box">
+				<view class="for" @tap="toUpdataAvatar()">
+					<view>修改头像</view>
+				</view>
+				<view class="for" @tap="toUpdataUserName()">
+					<view>修改昵称</view>
+				</view>
+				<view class="for" @tap="toUpdataPassword()">
+					<view>修改密码</view>
+				</view>
 				<view class="for" @tap="toAddFriend()">
 					<view>添加好友</view>
 				</view>
@@ -32,7 +41,7 @@
 </template>
 
 <script>
-	import {
+import {
 		mapActions
 	} from 'vuex'
 	export default {
@@ -44,33 +53,151 @@
 		},
 		onShow() {
 			// 获取用户信息
-			this.$u.api.Me.userInfo({
-				opt_type: 1,
-			}, {
-				custom: {
-					'auth': true
-				}
-			}).then(res => {
-				console.log(res)
-				if (res.status == 0) {
-					this.username = res.data.user_name
-					this.avatar = res.data.avatar
-				} else if (res.status == 50000) {
+			this.getUserInfo()
+		},
+		methods: {
+			...mapActions(['userLogoutAction']),
+			getUserInfo:function(){
+				this.$u.api.Me.userInfo({
+					opt_type: 1,
+				}, {
+					custom: {
+						'auth': true
+					}
+				}).then(res => {
+					console.log(res)
+					if (res.status == 0) {
+						this.username = res.data.user_name
+						this.avatar = res.data.avatar
+					} else if (res.status == 50000) {
+						uni.showToast({
+							title: "服务器内部错误",
+							icon: "none"
+						})
+					}
+				}).catch(err => {
+					console.log("login in err: ", err)
 					uni.showToast({
 						title: "服务器内部错误",
 						icon: "none"
 					})
-				}
-			}).catch(err => {
-				console.log("login in err: ", err)
-				uni.showToast({
-					title: "服务器内部错误",
-					icon: "none"
 				})
-			})
-		},
-		methods: {
-			...mapActions(['userLogoutAction']),
+			},
+			updateUserInfo:function(opt_type,content){
+				this.$u.api.Me.optUser({
+					opt_type:opt_type,
+					avatar:content,
+					user_name:content,
+					password:content,
+				}, {
+					custom: {
+						'auth': true
+					}
+				}).then(res => {
+					console.log(res)
+					if (res.status == 0) {
+						this.getUserInfo()
+						uni.showToast({
+							title: "修改成功",
+							icon: "none"
+						})
+					} else {
+						uni.showToast({
+							title: res.custom_msg,
+							icon: "none"
+						})
+					}
+				}).catch(err => {
+					uni.showToast({
+						title: "服务器内部错误",
+						icon: "none"
+					})
+				})
+			},
+			toUpdataAvatar:function(){
+				uni.showModal({
+					title: '输入头像网络链接',
+					content: '',
+					editable:true,//是否显示输入框
+					placeholderText:'找网图的链接，不支持本地相册',//输入框提示内容
+					confirmText: '确认',
+					cancelText: '取消',
+					success: (res) => {
+					  if (res.confirm) {
+						if (res.content==""){
+							uni.showToast({
+								title: "链接不能为空",
+								icon: "none"
+							})
+							return
+						}
+						this.updateUserInfo(1, res.content)
+					  }
+					} 
+				 });
+			},
+			toUpdataUserName:function(){
+				uni.showModal({
+					title: '输入新的昵称',
+					content: '',
+					editable:true,//是否显示输入框
+					placeholderText:'',//输入框提示内容
+					confirmText: '确认',
+					cancelText: '取消',
+					success: (res) => {
+					  if (res.confirm) {
+						 if (res.content==""){
+						 	uni.showToast({
+						 		title: "昵称不能为空",
+						 		icon: "none"
+						 	})
+						 	return
+						 }
+						this.updateUserInfo(2, res.content)
+					  }
+					} 
+				 });
+			},
+			toUpdataPassword:function(){
+				uni.showModal({
+					title: '输入新密码',
+					content: '',
+					editable:true,//是否显示输入框
+					placeholderText:'',//输入框提示内容
+					confirmText: '确认',
+					cancelText: '取消',
+					success: (res) => {
+					  if (res.confirm) {
+						if (res.content.length<6){
+							uni.showToast({
+								title: "密码太短",
+								icon: "none"
+							})
+							return
+						}
+						uni.showModal({
+							title: '再次输入新密码',
+							content: '',
+							editable:true,//是否显示输入框
+							placeholderText:'',//输入框提示内容
+							confirmText: '确认',
+							cancelText: '取消',
+							success: (res2) => {
+							  if (res2.confirm) {
+								if (res.content!=res2.content){
+									uni.showToast({
+										title: "密码不一致",
+										icon: "none"
+									})
+								}
+								this.updateUserInfo(3, res.content)
+							  }
+							} 
+						 });
+					  }
+					} 
+				 });
+			},
 			toAddFriend:function(){
 				uni.showModal({
 					title: '输入ta的手机号',
