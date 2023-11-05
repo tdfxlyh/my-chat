@@ -207,8 +207,12 @@
 					console.log(res)
 					if (res.status == 0) {
 						res.data.msg_list.reverse()
+						var res_timestamp = timestamp
 						res.data.msg_list.forEach(tmp=>{
-							that.message_list.unshift(tmp)
+							if (tmp.timestamp < res_timestamp){
+								res_timestamp =  tmp.timestamp
+								that.message_list.unshift(tmp)
+							}
 						})
 						setTimeout(()=>{
 							that.triggeredPull = false
