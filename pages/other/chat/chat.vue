@@ -155,7 +155,7 @@
 			lookChat:function(e){
 				var top = e.target.scrollTop
 				var height = e.target.scrollHeight
-				if(height-top>700){
+				if(height-top>950){
 					this.isGunDong=0
 				}else{
 					this.isGunDong=1
