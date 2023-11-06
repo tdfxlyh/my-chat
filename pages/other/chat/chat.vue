@@ -98,6 +98,20 @@
 			var that = this
 			that.timeOut1 = setInterval(()=>{
 				console.log(1)
+				that.getNewMessage()
+			},800)
+		},
+		onHide(){
+			console.log(11)
+			clearInterval(this.timeOut1)
+		},
+		onUnload(){
+			console.log(22)
+			clearInterval(this.timeOut1)
+		},
+		methods: {
+			getNewMessage:function(){
+				var that = this
 				if (that.isGunDong == 1) {
 					var opt_type = 4 // 新消息
 					var receiver_user_id = that.receiver_user_id
@@ -136,22 +150,12 @@
 						}
 					})
 				}
-			},800)
-		},
-		onHide(){
-			console.log(11)
-			clearInterval(this.timeOut1)
-		},
-		onUnload(){
-			console.log(22)
-			clearInterval(this.timeOut1)
-		},
-		methods: {
+			},
 			// 查看聊天记录
 			lookChat:function(e){
 				var top = e.target.scrollTop
 				var height = e.target.scrollHeight
-				if(height-top>1000){
+				if(height-top>700){
 					this.isGunDong=0
 				}else{
 					this.isGunDong=1
@@ -360,6 +364,8 @@
 						return
 					}
 					that.myInput = ""
+					// 发送成功，立即更新消息
+					that.getNewMessage()
 				})
 				
 			},

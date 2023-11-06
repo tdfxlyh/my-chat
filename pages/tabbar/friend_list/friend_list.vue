@@ -48,7 +48,7 @@
 			that.timeOut1 = setInterval(()=>{
 				console.log(122)
 				that.getFriendList()
-			},3000)
+			},4000)
 		},
 		onHide(){
 			console.log(111)
@@ -107,6 +107,7 @@
 									title: "修改成功",
 									icon: "none"
 								})
+								this.getFriendList()
 							} else {
 								uni.showToast({
 									title: res.custom_msg,
