@@ -1,6 +1,5 @@
 <template>
 	<view class="boxx">
-		<!-- search -->
 		<view class="search-box">
 			<view class="search">
 				<u-search placeholder="请输入关键字" v-model="searchVal" :clearabled="true" shape="square" :showAction="false"
