@@ -338,14 +338,17 @@
 			},
 			// 发送消息
 			toSendMsg:function(){
+				var inputVal = this.myInput
+				this.myInput = ""
+				
 				var that = this
-				if(that.myInput==""){
+				if(inputVal==""){
 					uni.showToast({title:"输入不能为空！",icon:"none"})
 					return
 				}
 				var message_type = 1
 				var receiver_user_id = that.receiver_user_id
-				var content = that.myInput
+				var content = inputVal
 				var timestamp = 0
 				if (that.message_list.length>0){
 					timestamp = that.message_list[that.message_list.length-1].timestamp
@@ -361,8 +364,7 @@
 					}
 				}).then(res => {
 					console.log(res)
-					if (res.status == 0){
-						that.myInput = ""
+					if (res.status == 0){						
 						var id = 0
 						if (that.message_list.length>0){
 							id = that.message_list[that.message_list.length-1].id
@@ -375,8 +377,9 @@
 						})
 						that.goBottom()
 					}else{
+						that.myInput = inputVal
 						uni.showToast({
-							title: "服务器内部错误",
+							title: "发送失败",
 							icon: "none"
 						})
 					}
