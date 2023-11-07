@@ -17,7 +17,8 @@
 			</view>
 			<view  class="time">
 				<view class="time_right">
-					{{item.time_str}}
+					<!-- {{item.time_str}} -->
+					14:49
 				</view>
 			</view>
 		</view>
@@ -34,13 +35,13 @@
 		},
 		computed:{
 			UserName(){
-				return this.item.name.length>16?this.item.name.substring(0,16)+"..." : this.item.name
+				return this.item.name.length>15?this.item.name.substring(0,15)+"..." : this.item.name
 			},
 			Icon(){
 				return this.item.avatar
 			},
 			Desc(){
-				return this.item.desc.length>16?this.item.desc.substring(0,16)+"..." : this.item.desc
+				return this.item.desc.length>15?this.item.desc.substring(0,15)+"..." : this.item.desc
 			}
 		}
 	}
@@ -92,7 +93,7 @@
 			}
 		}
 		.right{
-			flex: 8;
+			flex: 7;
 			display: flex;
 			flex-direction: column;
 			align-items: flex-start;
@@ -108,12 +109,12 @@
 			}
 		}
 		.time{
-			flex: 2;
+			flex: 3;
 			display: flex;
 			align-items: center;
 			justify-content: flex-end;
 			.time_right{
-				font-size: 25rpx;
+				font-size: 22rpx;
 				color: #aaa;
 			}
 		}
