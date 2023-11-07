@@ -84,10 +84,10 @@
 		}]
 	},
 	"globalStyle": {
-		"navigationBarTextStyle": "black",
+		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"navigationBarBackgroundColor": "#55aaff",
+		"backgroundColor": "#55aaff"
 	},
 	"uniIdRouter": {},
 	"condition" : { //模式配置，仅开发期间生效

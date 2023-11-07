@@ -3,7 +3,7 @@
 		<block >	
 			<block> 
 				<scroll-view class="scroll"  scroll-y="true" scroll-with-animation="true" :scroll-top='scrollTop' @scroll="lookChat"  
-					refresher-enabled="true" :refresher-threshold="10" :refresher-triggered="false" @refresherrefresh="onRefresh">
+					refresher-enabled="true" :refresher-threshold="45" :refresher-triggered="false" @refresherrefresh="onRefresh">
 					<block v-for="(item, index) in message_list" :key="index">
 						<view class="time" v-if="item.time_str!=''">
 							{{item.time_str}}
@@ -19,8 +19,8 @@
 						<!-- 我自己 -->
 						<view v-else class="chat-one chat-one-mine">
 							<view class="chat-box">
-								<view class="chat-content" v-if="item.message_type==1 && item.with_draw==0" @longpress="toOptMsg(item)">{{item.content}}</view>
-								<view class="chat-content with_draw" v-if="item.message_type==1 && item.with_draw==1">>>我撤回了一条消息</view>
+								<view class="chat-content bluewrite" v-if="item.message_type==1 && item.with_draw==0" @longpress="toOptMsg(item)">{{item.content}}</view>
+								<view class="chat-content bluewrite_with_draw" v-if="item.message_type==1 && item.with_draw==1">>>我撤回了一条消息</view>
 							</view>
 							<image class="chat-face" :src="item.avatar_url"  @tap="toSeeUserImages(item.avatar_url)" mode="aspectFill"/>
 						</view>
@@ -155,7 +155,7 @@
 			lookChat:function(e){
 				var top = e.target.scrollTop
 				var height = e.target.scrollHeight
-				if(height-top>950){
+				if(height-top>900){
 					this.isGunDong=0
 				}else{
 					this.isGunDong=1
@@ -346,26 +346,41 @@
 				var message_type = 1
 				var receiver_user_id = that.receiver_user_id
 				var content = that.myInput
+				var timestamp = 0
+				if (that.message_list.length>0){
+					timestamp = that.message_list[that.message_list.length-1].timestamp
+				}
 				that.$u.api.Friend.addMessage({
 					message_type, 
 					receiver_user_id,
-					content
+					content,
+					timestamp,
 				}, {
 					custom: {
 						'auth': true
 					}
 				}).then(res => {
 					console.log(res)
-					if (res.status != 0) {
+					if (res.status == 0){
+						that.myInput = ""
+						var id = 0
+						if (that.message_list.length>0){
+							id = that.message_list[that.message_list.length-1].id
+						}
+						res.data.msg_list.forEach(temp=>{
+							if (temp.id > id){
+								id = temp.id 
+								that.message_list.push(temp)
+							}
+						})
+						that.goBottom()
+					}else{
 						uni.showToast({
 							title: "服务器内部错误",
 							icon: "none"
 						})
-						return
 					}
-					that.myInput = ""
-					// 发送成功，立即更新消息
-					that.getNewMessage()
+					
 				})
 				
 			},
@@ -389,6 +404,7 @@
 		padding-bottom: 30rpx;
 		border-bottom: 1rpx solid #dddddd;
 		.time{
+			color: #999;
 			width: 100%;
 			height: 50rpx;
 			font-size: 27rpx;
@@ -437,6 +453,15 @@
 				margin-right: 20rpx;
 				color: #666;
 			}
+		}
+		.bluewrite{
+			color: #fff;
+			background-color: $theme-color;
+		}
+		.bluewrite_with_draw{
+			color: #eee;
+			font-size: 27rpx;
+			background-color: $theme-color;
 		}
 		.with_draw{
 			color: #aaaaaa;
