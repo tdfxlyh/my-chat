@@ -34,13 +34,13 @@
 		},
 		computed:{
 			UserName(){
-				return this.item.name.length>19?this.item.name.substring(0,17)+"..." : this.item.name
+				return this.item.name.length>16?this.item.name.substring(0,16)+"..." : this.item.name
 			},
 			Icon(){
 				return this.item.avatar
 			},
 			Desc(){
-				return this.item.desc.length>19?this.item.desc.substring(0,17)+"..." : this.item.desc
+				return this.item.desc.length>16?this.item.desc.substring(0,16)+"..." : this.item.desc
 			}
 		}
 	}
@@ -108,7 +108,7 @@
 			}
 		}
 		.time{
-			flex: 1;
+			flex: 2;
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -116,19 +116,6 @@
 				font-size: 25rpx;
 				color: #aaa;
 			}
-			// .time_right{
-			// 	border-radius: 50rpx;
-			// 	background-color: red;
-			// 	color: white;
-			// 	font-weight: 550;
-			// 	width: 32rpx;
-			// 	height: 32rpx;
-			// 	font-size: 15rpx;
-			// 	display: flex;
-			// 	align-items: center;
-			// 	justify-content: center;
-			// }
-
 		}
 	}
 }
