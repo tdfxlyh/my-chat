@@ -3714,7 +3714,7 @@ var render = function () {
               _c(
                 "uni-view",
                 { staticClass: _vm._$g(9, "sc"), attrs: { _i: 9 } },
-                [_vm._v("14:49")]
+                [_vm._v(_vm._$g(9, "t0-0"))]
               ),
             ],
             1
