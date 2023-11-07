@@ -111,7 +111,7 @@
 			flex: 2;
 			display: flex;
 			align-items: center;
-			justify-content: center;
+			justify-content: flex-end;
 			.time_right{
 				font-size: 25rpx;
 				color: #aaa;
