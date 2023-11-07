@@ -17,8 +17,7 @@
 			</view>
 			<view  class="time">
 				<view class="time_right">
-					<!-- {{item.time_str}} -->
-					14:49
+					{{item.time_str}}
 				</view>
 			</view>
 		</view>
@@ -28,7 +27,7 @@
 <script>
 	export default {
 		name:"message-list",
-		props:['item'], // id avatar user_name
+		props:['item'], 
 		data() {
 			return {
 			}
